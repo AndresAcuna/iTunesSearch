@@ -1,0 +1,19 @@
+﻿body {
+}
+
+#container {
+    width:100%;
+    text-align:center;
+}
+
+#icon{
+    float:left;
+    width:100px;
+    height:100px;
+}
+
+#textcontainer{
+    float:right;
+}
+
+

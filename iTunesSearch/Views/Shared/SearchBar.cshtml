@@ -1,0 +1,20 @@
+﻿
+@using (Html.BeginForm("Index","ITunesSearch"))
+{
+    <div class="container">
+        <div class="row">
+            <h3 style="text-align:center">Search the iTunes Store</h3>
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input type="text" class="search-query form-control" placeholder="Enter Search Term Here..." name="searchTextBox" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="submit" onclick="@("window.location.href='" + Url.Action("Index", "ITunesSearch") + "'");" id="searchButton">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

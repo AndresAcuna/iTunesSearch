@@ -1,0 +1,36 @@
+﻿@using iTunesSearch.Models
+@model iTunesSearch.Models.ITunesResponse
+
+    
+<div id="searchBar">
+    @Html.Partial("SearchBar")
+</div>
+
+<hr/>
+
+<div id="results">
+    @if (Model != null)
+    {
+        foreach (Result result in Model.Results)
+        {
+            <a href='@Url.Action("IncrementRedirect", "Analytics", result)' >
+                <div>
+                    <div name ="image" style="float:left" class="image-div-properties">
+                        <img src=@result.ArtworkURL100>
+                    </div>
+                    <div name ="details" class="detail-div-properties">
+                        <p class="padding-custom"><sub>@result.Kind</sub></p>
+                        <h4>@result.ArtistName</h4>
+                        <p>@result.TrackName</p>
+                    </div>
+                </div>
+            </a>
+            <hr/>
+        }
+        <p align="center">End of Search Results</p>
+    }
+    else
+    {
+        <p align="center">No Search Results Found!</p>
+    }
+</div>

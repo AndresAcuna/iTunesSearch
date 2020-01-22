@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="iTunesSearchModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="analytics">
+          <Key>
+            <PropertyRef Name="trackId" />
+          </Key>
+          <Property Name="trackId" Type="int" Nullable="false" />
+          <Property Name="hitCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hits">
+          <Key>
+            <PropertyRef Name="trackId" />
+          </Key>
+          <Property Name="trackId" Type="int" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="artist" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="artworkurl" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AnalyticsHits">
+          <End Role="hits" Type="Self.hits" Multiplicity="1" />
+          <End Role="analytics" Type="Self.analytics" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="hits">
+              <PropertyRef Name="trackId" />
+            </Principal>
+            <Dependent Role="analytics">
+              <PropertyRef Name="trackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="iTunesSearchModelStoreContainer">
+          <EntitySet Name="analytics" EntityType="Self.analytics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hits" EntityType="Self.hits" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AnalyticsHits" Association="Self.FK_AnalyticsHits">
+            <End Role="hits" EntitySet="hits" />
+            <End Role="analytics" EntitySet="analytics" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="iTunesSearchModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="iTunesSearchEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="analytics" EntityType="iTunesSearchModel.analytic" />
+          <EntitySet Name="hits" EntityType="iTunesSearchModel.hit" />
+          <AssociationSet Name="FK_AnalyticsHits" Association="iTunesSearchModel.FK_AnalyticsHits">
+            <End Role="hit" EntitySet="hits" />
+            <End Role="analytic" EntitySet="analytics" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="analytic">
+          <Key>
+            <PropertyRef Name="trackId" />
+          </Key>
+          <Property Name="trackId" Type="Int32" Nullable="false" />
+          <Property Name="hitCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="hit" Relationship="iTunesSearchModel.FK_AnalyticsHits" FromRole="analytic" ToRole="hit" />
+        </EntityType>
+        <EntityType Name="hit">
+          <Key>
+            <PropertyRef Name="trackId" />
+          </Key>
+          <Property Name="trackId" Type="Int32" Nullable="false" />
+          <Property Name="url" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="artist" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="artworkurl" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="analytic" Relationship="iTunesSearchModel.FK_AnalyticsHits" FromRole="hit" ToRole="analytic" />
+        </EntityType>
+        <Association Name="FK_AnalyticsHits">
+          <End Type="iTunesSearchModel.hit" Role="hit" Multiplicity="1" />
+          <End Type="iTunesSearchModel.analytic" Role="analytic" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="hit">
+              <PropertyRef Name="trackId" />
+            </Principal>
+            <Dependent Role="analytic">
+              <PropertyRef Name="trackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="iTunesSearchModelStoreContainer" CdmEntityContainer="iTunesSearchEntities">
+          <EntitySetMapping Name="analytics">
+            <EntityTypeMapping TypeName="iTunesSearchModel.analytic">
+              <MappingFragment StoreEntitySet="analytics">
+                <ScalarProperty Name="hitCount" ColumnName="hitCount" />
+                <ScalarProperty Name="trackId" ColumnName="trackId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hits">
+            <EntityTypeMapping TypeName="iTunesSearchModel.hit">
+              <MappingFragment StoreEntitySet="hits">
+                <ScalarProperty Name="artworkurl" ColumnName="artworkurl" />
+                <ScalarProperty Name="artist" ColumnName="artist" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="trackId" ColumnName="trackId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
