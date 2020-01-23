@@ -184,6 +184,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnalyticResultsController.cs" />
     <Compile Include="Controllers\AnalyticsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ITunesSearchController.cs" />
@@ -306,6 +307,7 @@
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\AnalyticResults\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
